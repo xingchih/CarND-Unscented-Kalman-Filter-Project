@@ -67,7 +67,8 @@ public:
   ///* Sigma point spreading parameter
   double lambda_;
 
-
+  ///*  previous timestamp
+  double previous_timestamp_;
   /**
    * Constructor
    */
@@ -102,6 +103,9 @@ public:
    * @param meas_package The measurement at k+1
    */
   void UpdateRadar(MeasurementPackage meas_package);
+  
+  VectorXd RadarMeasurementModel(double px, double py, double v, double yaw);
+  double constrainAngle(double x);
 };
 
 #endif /* UKF_H */
