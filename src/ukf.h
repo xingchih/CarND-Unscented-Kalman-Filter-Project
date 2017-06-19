@@ -69,6 +69,10 @@ public:
 
   ///*  previous timestamp
   double previous_timestamp_;
+
+  ///* Normalized Innovation Squared
+  double NIS_laser_;
+  double NIS_radar_;
   /**
    * Constructor
    */

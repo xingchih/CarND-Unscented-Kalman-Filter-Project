@@ -157,6 +157,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     // Laser updates
     UpdateLidar(meas_package);
   }
+  cout << "NIS laser: " << NIS_laser_ << "\t radar: " << NIS_radar_ << endl;
 
   // print the output
   //cout << "x_ = " << x_ << endl;
@@ -391,6 +392,9 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
   //update state mean and covariance matrix
   x_ = x_ + K * z_diff;
   P_ = P_ - K*S*K.transpose();
+
+  // update NIS
+  NIS_laser_ = z_diff.transpose() * S.inverse() * z_diff;
 }
 
 /**
@@ -512,6 +516,9 @@ void UKF::UpdateRadar(MeasurementPackage meas_package)
   //update state mean and covariance matrix
   x_ = x_ + K * z_diff;
   P_ = P_ - K*S*K.transpose();
+
+  // update NIS
+  NIS_radar_ = z_diff.transpose() * S.inverse() * z_diff;
 }
 
 VectorXd UKF::RadarMeasurementModel(double p_x, double p_y, double v, double yaw)
